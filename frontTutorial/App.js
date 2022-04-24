@@ -3,20 +3,28 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import About from './components/About.js'
+import ItemDetail from './components/ItemDetail.js'
 
-root = createNativeStackNavigator();
+Root = createNativeStackNavigator();
 
 export default function App() {
-  <PaperProvider>
-    <NavigationContainer>
       return (
-        <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-          <StatusBar style="auto" />
-        </View>
+        <PaperProvider>
+          <NavigationContainer>
+            <Root.Navigator>
+              <Root.Screen name={"About"} component={About}/>
+              <Root.Screen name={"Item Detail"} component={ItemDetail}/>
+            </Root.Navigator>
+            <View style={styles.container}>
+              <Text>Open up App.js to start working on your app!</Text>
+              <StatusBar style="auto" />
+            </View>
+          </NavigationContainer>
+        </PaperProvider>
       );
-    </NavigationContainer>
-  </PaperProvider>
+ 
+
 }
 
 const styles = StyleSheet.create({
