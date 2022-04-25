@@ -5,10 +5,10 @@ import * as Clipboard from "expo-clipboard";
 
 const AppInfo = require("../app.json").expo;
 
-export default function About(){
+export default function Home(){
   return(
     <View>
-      <Text>About this app. It is made by me</Text>
+      <Text>Welcome to my app!</Text>
     </View>
   );
 }
