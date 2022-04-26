@@ -4,7 +4,7 @@ import {Button, Text} from "react-native-paper";
 
 export default function ItemDetail() {
   return (
-    <View>
+    <View >
       <Text>Item Detail</Text>
     </View>
   );

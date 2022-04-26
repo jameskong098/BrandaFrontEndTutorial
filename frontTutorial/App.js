@@ -6,26 +6,41 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import About from './components/About.js'
 import ItemDetail from './components/ItemDetail.js'
-import Home from './components/Home.js'
+import { useNavigation } from '@react-navigation/native';
 
 Root = createNativeStackNavigator();
 
-export default function App({ navigation }) {
+function Home() {
+  return(
+    <View>
+      <Text>Welcome to my app!</Text>
+    </View>
+  );
+}
+
+function pressAbout() {
+  const navigation = useNavigation()
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('About') }> 
+      <View style={styles.container}>
+        <Text>About</Text>
+      </View>
+      <Ionicons name="ios-information-circle" size={24} color="black" />
+    </TouchableOpacity>
+  );
+}
+
+export default function App() {
       return (
         <PaperProvider>
           <NavigationContainer>
-            <Root.Navigator>
+            <Root.Navigator initialRouteName="Home">
               <Root.Screen 
                 name={"Home"} 
                 component={Home}
                 options={{
                   headerRight: () => (
-                    <TouchableOpacity onPress={() => navigation.navigate('About') }> 
-                      <View style={styles.container}>
-                        <Text>About</Text>
-                      </View>
-                      <Ionicons name="ios-information-circle" size={24} color="black" />
-                    </TouchableOpacity>
+                    pressAbout()
                   ),
                 }}
               />
@@ -40,18 +55,6 @@ export default function App({ navigation }) {
           </NavigationContainer>
         </PaperProvider>
       );
-}
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Item Details"
-        onPress={() => navigation.navigate('Item Detail')}
-      />
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({

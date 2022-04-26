@@ -7,8 +7,10 @@ const AppInfo = require("../app.json").expo;
 
 export default function About(){
   return(
-    <View>
-      <Text>About this app. It is made by me</Text>
+    <View >
+      <Text>This app was made for the Branda Frontend Tutorial, serving as admission to the team.
+        Developer: James D. Kong
+      </Text>
     </View>
   );
 }
