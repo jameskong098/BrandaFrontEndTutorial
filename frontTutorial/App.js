@@ -17,9 +17,20 @@ function Home() {
     <View style={styles.basic}>
       <Text style={{fontSize:30}}>Welcome to my app!</Text>
       <Text>Num is {num}</Text>
-      <Button mode={"contained"} onPress={() => setNum(num + 1 )}>
-        Increase num by 1.
-      </Button>
+      <View style={styles.spaceButtons}>
+        <Button mode={"contained"} onPress={() => setNum(num + 1 )}>
+          Increase num by 1.
+        </Button>
+        <Button mode={"contained"} onPress={() => setNum(num - 1 )}>
+          Decrease num by 1.
+        </Button> 
+        <Button mode={"contained"} onPress={() => setNum(0)}>
+          Reset num
+        </Button>
+        <Button mode={"contained"} onPress={() => setNum(num + 5)}>
+          Increase num by 5
+        </Button>
+      </View>
     </View>
   );
 }
@@ -66,11 +77,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 
   about: {
     flexDirection:'row',
     alignItems: 'center',
   },
+
+  spaceButtons: {
+    flex: 0.3,
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent: 'space-evenly'
+  }
 });
