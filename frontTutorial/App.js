@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Provider as PaperProvider, Button } from 'react-native-paper';
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, FlatList, } from 'react-native';
+import { Provider as PaperProvider, Button, Card } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,11 +8,32 @@ import About from './components/About.js'
 import ItemDetail from './components/ItemDetail.js'
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
+import { useEffect } from 'react/cjs/react.development';
+import todo from './todo.json'
 
 Root = createNativeStackNavigator();
 
+function renderToDo(item) {
+  return (
+    <View style={styles.spaceList}>
+     <Text>{item.name} {item.due}</Text>
+    </View>
+  )
+}
+
+function markItemDone(index){
+  let todoCopy = todoList;
+  todoCopy[index].done = !todoCopy[index].done;
+  setTodoData(todoCopy);
+  //you might need something extra to force a re-render!
+}
+
 function Home() {
   const [num, setNum] = useState(0);
+  const [todoList, setToDo] = useState("");
+  useEffect(() => {
+    setToDo(todo.todo)
+  },);
   return(
     <View style={styles.basic}>
       <Text style={{fontSize:30}}>Welcome to my app!</Text>
@@ -30,6 +51,13 @@ function Home() {
         <Button mode={"contained"} onPress={() => setNum(num + 5)}>
           Increase num by 5
         </Button>
+      </View>
+      <View style={styles.spaceList}> 
+        <FlatList
+          data={todoList}
+          renderItem={({item}) => renderToDo(item)}
+          keyExtractor={(item) => item.due} 
+        />
       </View>
     </View>
   );
@@ -86,7 +114,14 @@ const styles = StyleSheet.create({
   },
 
   spaceButtons: {
-    flex: 0.3,
+    flex: 0.5,
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent: 'space-evenly'
+  },
+
+  spaceList: {
+    flex: 1,
     flexDirection:'column',
     alignItems:'center',
     justifyContent: 'space-evenly'
