@@ -1,19 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, Button } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import About from './components/About.js'
 import ItemDetail from './components/ItemDetail.js'
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react'
 
 Root = createNativeStackNavigator();
 
 function Home() {
+  const [num, setNum] = useState(0);
   return(
     <View style={styles.basic}>
       <Text style={{fontSize:30}}>Welcome to my app!</Text>
+      <Text>Num is {num}</Text>
+      <Button mode={"contained"} onPress={() => setNum(num + 1 )}>
+        Increase num by 1.
+      </Button>
     </View>
   );
 }
