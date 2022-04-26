@@ -5,31 +5,41 @@ import * as Clipboard from "expo-clipboard";
 
 const AppInfo = require("../app.json").expo;
 
+const copyToClipboard = () => {
+  Clipboard.setString(JSON.stringify(AppInfo));
+};
+
 export default function About(){
   return(
-    <View >
+    <View>
       <DataTable>
         <DataTable.Header>
-         <DataTable.Title>Info</DataTable.Title>
-         <DataTable.Title>Details</DataTable.Title>
+          <DataTable.Title>Info</DataTable.Title>
+          <DataTable.Title>Details</DataTable.Title>
         </DataTable.Header>
-       <DataTable.Row>
-        <DataTable.Cell>Splash Location</DataTable.Cell>
-        <DataTable.Cell>{AppInfo.splash.image}</DataTable.Cell>
-      </DataTable.Row>
-      <DataTable.Row>
-        <DataTable.Cell>Version</DataTable.Cell>
-        <DataTable.Cell>{JSON.stringify(AppInfo.version)}</DataTable.Cell>
-      </DataTable.Row>
-      <DataTable.Row>
-        <DataTable.Cell>Orientation</DataTable.Cell>
-        <DataTable.Cell>{JSON.stringify(AppInfo.orientation)}</DataTable.Cell>
-      </DataTable.Row>
-      <DataTable.Row>
-        <DataTable.Cell>Android</DataTable.Cell>
-        <DataTable.Cell>{JSON.stringify(AppInfo.android)}</DataTable.Cell>
-      </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>Splash Location</DataTable.Cell>
+          <DataTable.Cell>{AppInfo.splash.image}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>Version</DataTable.Cell>
+          <DataTable.Cell>{JSON.stringify(AppInfo.version)}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>Orientation</DataTable.Cell>
+          <DataTable.Cell>{JSON.stringify(AppInfo.orientation)}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>Android</DataTable.Cell>
+          <DataTable.Cell>{JSON.stringify(AppInfo.android)}</DataTable.Cell>
+        </DataTable.Row>
       </DataTable>
+      <Button title="Copy App Info" mode="contained" onPress={() => copyToClipboard()} >
+        Click here to copy app info
+      </Button>
+
     </View>
+    
   );
 }
+
