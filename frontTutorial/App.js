@@ -12,8 +12,8 @@ Root = createNativeStackNavigator();
 
 function Home() {
   return(
-    <View>
-      <Text>Welcome to my app!</Text>
+    <View style={styles.basic}>
+      <Text style={{fontSize:30}}>Welcome to my app!</Text>
     </View>
   );
 }
@@ -21,12 +21,15 @@ function Home() {
 function pressAbout() {
   const navigation = useNavigation()
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('About') }> 
-      <View style={styles.container}>
-        <Text>About</Text>
-      </View>
-      <Ionicons name="ios-information-circle" size={24} color="black" />
-    </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('About') }> 
+        <View style={{letterSpacing: 2}}>
+          <View style={styles.about}>
+            <Text style={{fontSize:18}}>About</Text>
+            <Ionicons name="ios-information-circle" size={24} color="black" />
+          </View>
+        </View>
+        
+      </TouchableOpacity>
   );
 }
 
@@ -46,22 +49,22 @@ export default function App() {
               />
               <Root.Screen name={"About"} component={About}/>
               <Root.Screen name={"Item Detail"} component={ItemDetail}/>
-            
             </Root.Navigator>
-            <View style={styles.container}>
-              <Text>Open up App.js to start working on your app!</Text>
-              <StatusBar style="auto" />
-            </View>
           </NavigationContainer>
         </PaperProvider>
       );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  basic: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  about: {
+    flexDirection:'row',
+    alignItems: 'center',
   },
 });
