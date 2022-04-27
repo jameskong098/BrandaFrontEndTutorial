@@ -11,7 +11,7 @@ export default function LibraryHours(){
     useEffect(() => {
         async function fetchRSS() {
           fetch("http://brandaserver.herokuapp.com/getinfo/libraryHours/week")
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((textResponse) => {
               setToHours(textResponse)
             })
@@ -21,9 +21,12 @@ export default function LibraryHours(){
         }
         fetchRSS();
       }, []);
+    //let today = new Date().toISOString().slice(0, 10)
+    
+   
   return(
     <View>
-    <Text>{LibraryHours}</Text>
+    <Text>{JSON.stringify(LibraryHours)}</Text>
     </View>
   );
 }
