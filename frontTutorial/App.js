@@ -14,42 +14,44 @@ import moment from 'moment';
 
 Root = createNativeStackNavigator();
 
-function renderToDo(item, index, todoList) {
-  const NewCheckBox= (item, index) => {
-    const [checked, setChecked] = useState(false);
-    return (
-      <Checkbox.Android
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={() => {
-          setChecked(!checked);
-          //markItemDone(index, todoList)
-        }}
-      />
-    );
-  };
-  return (
-    <View style={styles.checkBoxes}>
-     <Text>Task: {item.name}  |  Due:  {moment(item.due).format('MMMM Do YYYY')}</Text>
-     <NewCheckBox>
-     </NewCheckBox>
-    </View>
-  )
-}
-
-function markItemDone(index, todoList){
-  //console.log(index)
-  //console.log(todoList)
-  let todoCopy = todoList;
-  todoCopy[index].done = !todoCopy[index].done;
-  setTodoData(todoCopy);
-}
-
 function Home() {
   const [num, setNum] = useState(0);
-  const [todoList, setToDo] = useState("");
+  const [todoList, setToDo] = useState([]);
+
   useEffect(() => {
     setToDo(todo.todo)
   },);
+  
+  function renderToDo(item) {
+    const NewCheckBox= () => {
+      const [checked, setChecked] = useState(item.done);
+      return (
+        <Checkbox.Android
+          status={checked ? 'checked' : 'unchecked'}
+          onPress={() => {
+            setChecked(!checked);
+            markItemDone(todoList.indexOf(item))
+          }}
+        />
+      );
+    };
+    return (
+      <View style={styles.checkBoxes}>
+       <Text>{item.name}  |  Due:  {moment(item.due).format('MMMM Do YYYY')}</Text>
+       <NewCheckBox>
+       </NewCheckBox>
+      </View>
+    )
+  }
+  
+  function markItemDone(index){
+    //console.log(index)
+    //console.log(todoList)
+    let todoCopy = todoList;
+    todoCopy[index].done = !todoCopy[index].done;
+    setToDo(todoCopy);
+  }
+
   return(
     <View style={styles.basic}>
       <Text style={{fontSize:30}}>Welcome to my app!</Text>
@@ -67,12 +69,18 @@ function Home() {
         <Button mode={"contained"} onPress={() => setNum(num + 5)}>
           Increase num by 5
         </Button>
+        <Button mode={"contained"} onPress={() => setToDo(todo.todo)}>
+          Show completed tasks
+        </Button>
+        <Button mode={"contained"} onPress={() => setToDo(todoList.filter(todo => todo.done == false))}>
+          Hide completed tasks
+        </Button>
       </View>
       <Text>To-Do List:</Text>
       <View style={styles.spaceList}> 
         <FlatList
           data={todoList}
-          renderItem={({item, index}) => renderToDo(item, index, todoList)}
+          renderItem={({item}) => renderToDo(item)}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

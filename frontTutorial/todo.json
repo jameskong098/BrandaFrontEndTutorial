@@ -19,6 +19,101 @@
         "name":"Glory to Ukraine",
         "due": "2022-02-24",
         "done": false
+      },
+      {
+        "name": "HIST 109B reading",
+        "due": "2022-02-28",
+        "done": false
+      },
+      {
+        "name": "internship assignment",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "run a lap around track",
+        "due": "2022-02-05",
+        "done": true
+      },
+      {
+        "name":"fly to Africa",
+        "due": "2022-02-06",
+        "done": false
+      },
+      {
+        "name": "internship assignment",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "run a lap around track",
+        "due": "2022-02-05",
+        "done": true
+      },
+      {
+        "name":"fly to Canada",
+        "due": "2022-05-06",
+        "done": false
+      },
+      {
+        "name": "finish essay for English",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "bike around town",
+        "due": "2022-01-05",
+        "done": true
+      },
+      {
+        "name":"eat food",
+        "due": "2022-04-06",
+        "done": false
+      },
+      {
+        "name": "finish essay for English",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "bike around town",
+        "due": "2022-01-05",
+        "done": true
+      },
+      {
+        "name":"eat food",
+        "due": "2022-04-06",
+        "done": false
+      },
+      {
+        "name": "finish essay for English",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "bike around town",
+        "due": "2022-01-05",
+        "done": true
+      },
+      {
+        "name":"eat food",
+        "due": "2022-04-06",
+        "done": false
+      },
+      {
+        "name": "finish essay for English",
+        "due": "2022-02-12",
+        "done": false
+      },
+      {
+        "name": "bike around town",
+        "due": "2022-01-05",
+        "done": true
+      },
+      {
+        "name":"eat food",
+        "due": "2022-04-06",
+        "done": false
       }
     ]
   }
