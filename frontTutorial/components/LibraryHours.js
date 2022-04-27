@@ -25,24 +25,24 @@ export default function LibraryHours(){
     
   function renderHours(item) {
       return (
-        <View>
+        <View style={{alignItems:'center'}}>
          <Text style={{fontSize:50}}>
            {item.day}:
            </Text>
          <Text style={{fontSize:15}}>
-           {item.hours[0].location}: {item.hours[0].times.hours[0].from} to {item.hours[0].times.hours[0].to}
+           {item.hours[0].location}: {item.hours[0].times.hours[0].from} to {item.hours[0].times.hours[0].to}{'\n'}
           </Text>
           <Text style={{fontSize:15}}>
-           {item.hours[1].location}: {item.hours[1].times.status}
+           {item.hours[1].location}: {item.hours[1].times.status}{'\n'}
           </Text>
           <Text style={{fontSize:15}}>
-           {item.hours[2].location}: {item.hours[2].times.status}
+           {item.hours[2].location}: {item.hours[2].times.status}{'\n'}
           </Text>
           <Text style={{fontSize:15}}>
-           {item.hours[3].location}: {item.hours[3].times.status}
+           {item.hours[3].location}: {item.hours[3].times.status}{'\n'}
           </Text>
           <Text style={{fontSize:15}}>
-           {item.hours[4].location}: {item.hours[4].times.status}
+           {item.hours[4].location}: {item.hours[4].times.status}{'\n'}
           </Text>
         </View>
       )
@@ -60,4 +60,3 @@ export default function LibraryHours(){
     </View>
   );
 }
-
