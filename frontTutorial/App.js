@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, FlatList, } from 'react-native';
-import { Provider as PaperProvider, Button, Card } from 'react-native-paper';
+import { Provider as PaperProvider, Button, Card, Checkbox, black} from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -10,18 +10,33 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
 import { useEffect } from 'react/cjs/react.development';
 import todo from './todo.json'
+import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 Root = createNativeStackNavigator();
 
-function renderToDo(item) {
+const NewCheckBox= (item, index) => {
+  const [checked, setChecked] = useState(false);
   return (
-    <View style={styles.spaceList}>
+    <Checkbox.Android
+      status={checked ? 'checked' : 'unchecked'}
+      onPress={() => {
+        setChecked(!checked);
+        markItemDone(index)
+      }}
+    />
+  );
+};
+
+function renderToDo(item, index) {
+  return (
+    <View style={styles.checkBoxes}>
      <Text>{item.name} {item.due}</Text>
+     <NewCheckBox></NewCheckBox>
     </View>
   )
 }
 
-function markItemDone(index){
+function markItemDone(index, todoList){
   let todoCopy = todoList;
   todoCopy[index].done = !todoCopy[index].done;
   setTodoData(todoCopy);
@@ -31,6 +46,7 @@ function markItemDone(index){
 function Home() {
   const [num, setNum] = useState(0);
   const [todoList, setToDo] = useState("");
+  const [checked, setChecked] = useState(false);
   useEffect(() => {
     setToDo(todo.todo)
   },);
@@ -55,7 +71,7 @@ function Home() {
       <View style={styles.spaceList}> 
         <FlatList
           data={todoList}
-          renderItem={({item}) => renderToDo(item)}
+          renderItem={({item, index}) => renderToDo(item, index)}
           keyExtractor={(item) => item.due} 
         />
       </View>
@@ -125,5 +141,10 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     alignItems:'center',
     justifyContent: 'space-evenly'
+  },
+
+  checkBoxes: {
+    flexDirection:'row',
+    alignItems:'center'
   }
 });
