@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, FlatList, } from 'react-native';
 import { Provider as PaperProvider, Button, Card, Checkbox, black} from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,43 +9,42 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
 import { useEffect } from 'react/cjs/react.development';
 import todo from './todo.json'
-import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 Root = createNativeStackNavigator();
 
-const NewCheckBox= (item, index) => {
-  const [checked, setChecked] = useState(false);
-  return (
-    <Checkbox.Android
-      status={checked ? 'checked' : 'unchecked'}
-      onPress={() => {
-        setChecked(!checked);
-        markItemDone(index)
-      }}
-    />
-  );
-};
-
-function renderToDo(item, index) {
+function renderToDo(item, index, todoList) {
+  const NewCheckBox= (item, index) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox.Android
+        status={checked ? 'checked' : 'unchecked'}
+        onPress={() => {
+          setChecked(!checked);
+          //markItemDone(index, todoList)
+        }}
+      />
+    );
+  };
   return (
     <View style={styles.checkBoxes}>
      <Text>{item.name} {item.due}</Text>
-     <NewCheckBox></NewCheckBox>
+     <NewCheckBox>
+     </NewCheckBox>
     </View>
   )
 }
 
 function markItemDone(index, todoList){
+  console.log(index)
+  console.log(todoList)
   let todoCopy = todoList;
   todoCopy[index].done = !todoCopy[index].done;
   setTodoData(todoCopy);
-  //you might need something extra to force a re-render!
 }
 
 function Home() {
   const [num, setNum] = useState(0);
   const [todoList, setToDo] = useState("");
-  const [checked, setChecked] = useState(false);
   useEffect(() => {
     setToDo(todo.todo)
   },);
@@ -71,8 +69,8 @@ function Home() {
       <View style={styles.spaceList}> 
         <FlatList
           data={todoList}
-          renderItem={({item, index}) => renderToDo(item, index)}
-          keyExtractor={(item) => item.due} 
+          renderItem={({item, index}) => renderToDo(item, index, todoList)}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     </View>
