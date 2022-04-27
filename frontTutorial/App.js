@@ -4,11 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import About from './components/About.js'
+import LibraryHours from './components/LibraryHours.js'
 import ItemDetail from './components/ItemDetail.js'
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
 import { useEffect } from 'react/cjs/react.development';
 import todo from './todo.json'
+import moment from 'moment';
 
 Root = createNativeStackNavigator();
 
@@ -27,7 +29,7 @@ function renderToDo(item, index, todoList) {
   };
   return (
     <View style={styles.checkBoxes}>
-     <Text>{item.name} {item.due}</Text>
+     <Text>Task: {item.name}  |  Due:  {moment(item.due).format('MMMM Do YYYY')}</Text>
      <NewCheckBox>
      </NewCheckBox>
     </View>
@@ -35,8 +37,8 @@ function renderToDo(item, index, todoList) {
 }
 
 function markItemDone(index, todoList){
-  console.log(index)
-  console.log(todoList)
+  //console.log(index)
+  //console.log(todoList)
   let todoCopy = todoList;
   todoCopy[index].done = !todoCopy[index].done;
   setTodoData(todoCopy);
@@ -66,6 +68,7 @@ function Home() {
           Increase num by 5
         </Button>
       </View>
+      <Text>To-Do List:</Text>
       <View style={styles.spaceList}> 
         <FlatList
           data={todoList}
@@ -92,6 +95,20 @@ function pressAbout() {
   );
 }
 
+function pressLibraryHours() {
+  const navigation = useNavigation()
+  return (
+      <TouchableOpacity onPress={() => navigation.navigate('LibraryHours') }> 
+        <View style={{letterSpacing: 2}}>
+          <View style={styles.about}>
+            <Text style={{fontSize:18}}>Library Hours</Text>
+            <Ionicons name="ios-information-circle" size={24} color="black" />
+          </View>
+        </View>
+      </TouchableOpacity>
+  );
+}
+
 export default function App() {
       return (
         <PaperProvider>
@@ -104,9 +121,13 @@ export default function App() {
                   headerRight: () => (
                     pressAbout()
                   ),
+                  headerLeft: () => (
+                    pressLibraryHours()
+                  )
                 }}
               />
               <Root.Screen name={"About"} component={About}/>
+              <Root.Screen name={"LibraryHours"} component={LibraryHours}/>
               <Root.Screen name={"Item Detail"} component={ItemDetail}/>
             </Root.Navigator>
           </NavigationContainer>
