@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import About from './components/About.js'
 import LibraryHours from './components/LibraryHours.js'
 import ItemDetail from './components/ItemDetail.js'
+import Chat from './components/Chat.js'
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
 import { useEffect } from 'react/cjs/react.development';
@@ -17,6 +18,7 @@ Root = createNativeStackNavigator();
 function Home() {
   const [num, setNum] = useState(0);
   const [todoList, setToDo] = useState([]);
+  const navigation = useNavigation()
 
   useEffect(() => {
     setToDo(todo.todo)
@@ -75,6 +77,11 @@ function Home() {
         <Button mode={"contained"} onPress={() => setToDo(todoList.filter(todo => todo.done == false))}>
           Hide completed tasks
         </Button>
+        <Button mode={"contained"} onPress={() => { 
+          navigation.navigate("Chat")
+        }}>
+        Chat
+        </Button>
       </View>
       <Text>To-Do List:</Text>
       <View style={styles.spaceList}> 
@@ -117,6 +124,20 @@ function pressLibraryHours() {
   );
 }
 
+function pressChat() {
+  const navigation = useNavigation()
+  return (
+      <TouchableOpacity onPress={() => navigation.navigate('Chat') }> 
+        <View style={{letterSpacing: 2}}>
+          <View style={styles.about}>
+            <Text style={{fontSize:18}}>Library Hours</Text>
+            <Ionicons name="ios-information-circle" size={24} color="black" />
+          </View>
+        </View>
+      </TouchableOpacity>
+  );
+}
+
 export default function App() {
       return (
         <PaperProvider>
@@ -131,11 +152,12 @@ export default function App() {
                   ),
                   headerLeft: () => (
                     pressLibraryHours()
-                  )
+                  ),
                 }}
               />
               <Root.Screen name={"About"} component={About}/>
               <Root.Screen name={"LibraryHours"} component={LibraryHours}/>
+              <Root.Screen name={"Chat"} component={Chat}/>
               <Root.Screen name={"Item Detail"} component={ItemDetail}/>
             </Root.Navigator>
           </NavigationContainer>
