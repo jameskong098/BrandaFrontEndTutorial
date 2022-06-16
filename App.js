@@ -77,11 +77,6 @@ function Home() {
         <Button mode={"contained"} onPress={() => setToDo(todoList.filter(todo => todo.done == false))}>
           Hide completed tasks
         </Button>
-        <Button mode={"contained"} onPress={() => { 
-          navigation.navigate("Chat")
-        }}>
-        Chat
-        </Button>
       </View>
       <Text>To-Do List:</Text>
       <View style={styles.spaceList}> 
@@ -91,6 +86,11 @@ function Home() {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Chat')}
+        style={styles.chatButton}>
+        <Ionicons name="ios-chatbox-ellipses-sharp" size={35} color = "white"/>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -114,20 +114,6 @@ function pressLibraryHours() {
   const navigation = useNavigation()
   return (
       <TouchableOpacity onPress={() => navigation.navigate('LibraryHours') }> 
-        <View style={{letterSpacing: 2}}>
-          <View style={styles.about}>
-            <Text style={{fontSize:18}}>Library Hours</Text>
-            <Ionicons name="ios-information-circle" size={24} color="black" />
-          </View>
-        </View>
-      </TouchableOpacity>
-  );
-}
-
-function pressChat() {
-  const navigation = useNavigation()
-  return (
-      <TouchableOpacity onPress={() => navigation.navigate('Chat') }> 
         <View style={{letterSpacing: 2}}>
           <View style={styles.about}>
             <Text style={{fontSize:18}}>Library Hours</Text>
@@ -189,11 +175,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'column',
     alignItems:'center',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    zIndex: 1
   },
 
   checkBoxes: {
     flexDirection:'row',
     alignItems:'center'
-  }
+  }, 
+
+  chatButton: {
+    width: 70,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: 'rgba(86,113,234)',
+    position: "absolute",
+    bottom: 0,
+    left: 300,
+    right: 0,
+    top: 600,
+    zIndex: 5,
+  },
+
 });

@@ -1,20 +1,35 @@
-import { Chatbot } from "react-chatbot-kit";
-import { View } from 'react-native'
+import React, { useState, useCallback, useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
 
-import config from "../chatbot/config.js";
-import MessageParser from "../chatbot/MessageParser.js";
-import ActionProvider from "../chatbot/ActionProvider.js";
+export default function Example() {
+  const [messages, setMessages] = useState([]);
 
-const Chat = () => {
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
   return (
-    <View>
-      <Chatbot
-        config={config}
-        messageParser={MessageParser}
-        actionProvider={ActionProvider}
-      />
-    </View>
-  );
-};
-
-export default Chat;
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+    />
+  )
+}
