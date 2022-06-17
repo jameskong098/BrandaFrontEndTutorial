@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Avatar, GiftedChat } from 'react-native-gifted-chat'
+import { StyleSheet } from 'react-native'
 
 export default function Example() {
   const [messages, setMessages] = useState([]);
@@ -8,12 +9,38 @@ export default function Example() {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: "Hello, I am Branda's chatbot. Here are some topics that you can ask me about!",
         createdAt: new Date(),
+        quickReplies: {
+          type: 'radio', // or 'checkbox',
+          keepIt: true,
+          values: [
+            {
+              title: 'COVID policies',
+              value: '',
+            },
+            {
+              title: 'Facility Hours',
+              value: '',
+            },
+            {
+              title: 'Next Bus/Van',
+              value: '',
+            },
+            {
+              title: 'Classes',
+              value: '',
+            },
+            {
+              title: 'Emergencies',
+              value: '',
+            },
+          ],
+        },
         user: {
           _id: 2,
           name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
+          avatar: require("../assets/brandaLogo.jpg"),
         },
       },
     ])
@@ -30,6 +57,15 @@ export default function Example() {
       user={{
         _id: 1,
       }}
+      style={styles.background}
+      
     />
   )
+  
 }
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: 'rgb(86,113,234)'
+  }
+});

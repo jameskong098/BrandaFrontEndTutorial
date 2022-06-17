@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 100,
-    backgroundColor: 'rgba(86,113,234)',
+    backgroundColor: 'rgb(86,113,234)',
     position: "absolute",
     bottom: 0,
     left: 300,
