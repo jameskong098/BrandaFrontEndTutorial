@@ -1,15 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Avatar, GiftedChat, Day } from 'react-native-gifted-chat'
-import { View, StyleSheet } from 'react-native'
+import { GiftedChat, Day, } from 'react-native-gifted-chat'
+import { StyleSheet } from 'react-native'
 import { QuickReplies } from 'react-native-gifted-chat/lib/QuickReplies';
 
 export default function Example() {
   const [messages, setMessages] = useState([]);
-
   useEffect(() => {
     setMessages([
       {
-        _id: 1,
+        _id: -1,
         text: "Hello, I am Branda's chatbot. Here are some topics that you can ask me about! You can also type to ask me a question or topic!",
         createdAt: new Date(),
         quickReplies: {
@@ -62,9 +61,14 @@ export default function Example() {
   }
 
   function onQuickReply (quickReply) {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
     let message = quickReply[0].title;
     let response = quickReply[0].value;
     let choice = {
+      _id: keyGenerator,
       text: message,
       createdAt: new Date(),
       user: {
@@ -72,7 +76,9 @@ export default function Example() {
         name: 'User',
       }
     }
+    keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
     let reply = {
+      _id: keyGenerator,
       text: response,
       createdAt: new Date(),
       user: {
@@ -86,7 +92,6 @@ export default function Example() {
   }
   
   return (
-  
 
     <GiftedChat
       messages={messages}
