@@ -194,9 +194,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(86,113,234)',
     position: "absolute",
     bottom: 0,
-    left: 300,
+    left: 330,
     right: 0,
-    top: 600,
+    top: 720,
     zIndex: 5,
   },
 
