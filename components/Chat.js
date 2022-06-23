@@ -5,6 +5,8 @@ import { QuickReplies } from 'react-native-gifted-chat/lib/QuickReplies';
 
 export default function Example() {
   const [messages, setMessages] = useState([]);
+  const [lastTrivia, setLastTrivia] = useState(undefined)
+  const randomResponse = ["Sorry, I'm not sure what you mean by that.", "I don't understand.", "I'm not sure what you mean.", "Sorry, come again?", "I'm perplexed by what you said, but I'm not sure what that means.", "Huh?", "Repeat please?", "Could you rephrase that?", "I'm not smart enough to answer this, sorry!"]
   useEffect(() => {
     setMessages([
       {
@@ -76,44 +78,64 @@ export default function Example() {
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    let lastMsg = messages[messages.length - 1]
-    console.log(lastMsg)
-    console.log(lastMsg.length)
-    if (lastMsg.answer != '') {
-      let userResponse = lastMsg.text
-      let answer = lastMsg.answer
-      if (userResponse.includes(answer)) {
-        let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
-        let reply = {
-          _id: keyGenerator,
-          text: "Correct! " + lastMsg.answer + " is the answer!" ,
-          answer: answer,
-          createdAt: new Date(),
-          user: {
-            _id: 0,
-            name: 'Branda Bot',
-            avatar: require("../assets/brandaLogo.jpg"),
-          },
+    console.log(lastTrivia)
+    if (lastTrivia != undefined) {
+      if (lastTrivia.answer != '') {
+        let userResponse = messages[0].text.toLowerCase()
+        let answer = lastTrivia.answer.toLowerCase()
+        if (userResponse.includes(answer)) {
+          var response = "Correct! " + lastTrivia.answer + " is the answer!"
+          botReply(response, answer, '')
+          setLastTrivia(undefined)
         }
-        setMessages(previousMessages => GiftedChat.append(previousMessages, [reply]))
-      }
-      else {
-        let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
-        let reply = {
-          _id: keyGenerator,
-          text: "Incorrect..." + lastMsg.answer + " is the answer!" ,
-          answer: answer,
-          createdAt: new Date(),
-          user: {
-            _id: 0,
-            name: 'Branda Bot',
-            avatar: require("../assets/brandaLogo.jpg"),
-          },
+        else {
+          var response = "Incorrect..." + lastTrivia.answer + " is the answer!"
+          botReply(response, answer, '')
+          setLastTrivia(undefined)
         }
-        setMessages(previousMessages => GiftedChat.append(previousMessages, [reply]))
       }
     }
+    else {
+      var response = randomResponse[Math.floor(Math.random() * (randomResponse.length))]
+      botReply(response, '', '')
+    }
   }, [])
+
+  function botReply (response, answer, options) {
+    let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
+    let reply = {}
+    if (options == '' || options == undefined) {
+      reply = {
+        _id: keyGenerator,
+        text: response,
+        answer: answer,
+        createdAt: new Date(),
+        user: {
+          _id: 0,
+          name: 'Branda Bot',
+          avatar: require("../assets/brandaLogo.jpg"),
+        },
+      }
+      if (answer != '') {
+        setLastTrivia(reply)
+      }
+      console.log(lastTrivia)
+    }
+    else {
+      reply = {
+        _id: keyGenerator,
+        text: response,
+        quickReplies: options,
+        createdAt: new Date(),
+        user: {
+          _id: 0,
+          name: 'Branda Bot',
+          avatar: require("../assets/brandaLogo.jpg"),
+        },
+      }
+    }
+    setMessages(previousMessages => GiftedChat.append(previousMessages, [reply]))
+  }
 
   function renderDay (props) {
     //Add the extra styles via containerStyle
@@ -125,52 +147,32 @@ export default function Example() {
    return <QuickReplies {...props} quickReplyTextStyle={styles.quickReply} quickReplyStyle={styles.quickReplyBorder} />
   }
 
-  function addMessages (quickReply, message, response) {
-    let answer = ''
-    if (message == 'Random Trivia') {
-      response = response.question
-      answer = response.correct_answer
-    }
-    let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
-    let options = quickReply[0].quickReplies;
-    let choice = {
-      _id: keyGenerator,
-      text: message,
-      createdAt: new Date(),
-      user: {
-        _id:1,
-        name: 'User',
-      }
-    }
-    keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
-    let reply = {
-      _id: keyGenerator,
-      text: response,
-      answer: answer,
-      quickReplies: options,
-      createdAt: new Date(),
-      user: {
-        _id: 0,
-        name: 'Branda Bot',
-        avatar: require("../assets/brandaLogo.jpg"),
-      },
-    }
-    setMessages(previousMessages => GiftedChat.append(previousMessages, [choice]))
-    setMessages(previousMessages => GiftedChat.append(previousMessages, [reply]))
-  }
-
   function onQuickReply (quickReply) {
     // Math.random should be unique because of its seeding algorithm.
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
     let message = quickReply[0].title;
     let response = quickReply[0].value;
+    let options = quickReply[0].quickReplies;
+      let keyGenerator = '_' + Math.random().toString(36).substr(2, 9)
+      let choice = {
+        _id: keyGenerator,
+        text: message,
+        createdAt: new Date(),
+        user: {
+          _id:1,
+          name: 'User',
+        }
+      }
+      setMessages(previousMessages => GiftedChat.append(previousMessages, [choice]))
     if (message == 'Random Trivia') {
         async function fetchRSS() {
           fetch("https://opentdb.com/api.php?amount=1")
             .then((response) => response.json())
             .then((textResponse) => {
-              addMessages(quickReply, message, textResponse.results[0])
+              response = textResponse.results[0].question
+              let answer = textResponse.results[0].correct_answer
+              botReply(response, answer, '')
             })
             .catch((error) => {
               console.error(error);
@@ -179,7 +181,7 @@ export default function Example() {
         fetchRSS();
     }
     else {
-      addMessages(quickReply, message, response)
+      botReply(response, '', options)
     }
   }
   
