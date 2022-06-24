@@ -1,6 +1,6 @@
 # BrandaFrontEndTutorial
 
-This is part of the recruitment project for Branda. Since I am now a Branda Developer, this repo is now used for new feature testing/prototyping purposes.
+This project was part of the recruitment projects for Branda. Since I am now a Branda Developer, this repo is now used for new feature testing/prototyping purposes.
 
 Original Assignment Description: 
 
