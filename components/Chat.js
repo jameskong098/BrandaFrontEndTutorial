@@ -155,7 +155,7 @@ export default function Chat() {
   }
   
   return (
-    <View style={{backgroundColor:'red', flex: 1}}>
+    <View style={{flex: 1}}>
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
