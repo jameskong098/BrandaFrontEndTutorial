@@ -48,3 +48,24 @@ export const quickReplies = [
       value: ''
     },
   ]
+
+  export const openMessage = [
+    {
+      _id: -1,
+      text: "Hello, I am Branda's chatbot. Here are some topics that you can ask me about. You can also type in the chat box for some responses.",
+      createdAt: new Date(),
+      quickReplies: {
+        type: 'radio', // or 'checkbox',
+        keepIt: true,
+        values: quickReplies
+      },
+      user: {
+        _id: 0,
+        name: 'Branda Bot',
+        avatar: require("../assets/brandaLogo.jpg"),
+      },
+    },
+  ]
+
+  export const randomResponse = ["Sorry, I'm not sure what you mean by that.", "I don't understand.", "I'm not sure what you mean.", "Sorry, come again?", "I'm perplexed by what you said, but I'm not sure what that means.", "Huh?", "Repeat please?", "Could you rephrase that?", "I'm not smart enough to answer this, sorry!"]
+  
