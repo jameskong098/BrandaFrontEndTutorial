@@ -1,4 +1,4 @@
-export const quickReplies = [
+export const quickReplyTexts = [
     {
       title: 'Safety/Health Related Issues',
       value: 'Which issue would you like to ask about?',
@@ -57,7 +57,7 @@ export const quickReplies = [
       quickReplies: {
         type: 'radio', // or 'checkbox',
         keepIt: true,
-        values: quickReplies
+        values: quickReplyTexts
       },
       user: {
         _id: 0,
